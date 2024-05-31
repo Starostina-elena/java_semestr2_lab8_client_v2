@@ -79,7 +79,8 @@ public class UpdateCommand implements Command {
             }
             UnitOfMeasure resUnitOfMeasure;
             if (arguments.length >= 9) {
-                resUnitOfMeasure = UnitOfMeasure.valueOf(arguments[8]);
+                //resUnitOfMeasure = UnitOfMeasure.valueOf(arguments[8]);
+                resUnitOfMeasure = null;
             } else {
                 ArrayList<String> unitOfMeasures = new ArrayList<>();
                 System.out.println("Enter one of unit of measure:");
@@ -105,7 +106,12 @@ public class UpdateCommand implements Command {
             while (true) {
                 try {
                     if (arguments.length >= 10) {
-                        org = new Organization(arguments[9], arguments[10], Integer.parseInt(arguments[11]));
+                        if (arguments[11].equals("")) {
+                            org = new Organization(arguments[9], arguments[10], 0);
+                        } else {
+                            org = new Organization(arguments[9], arguments[10], Integer.parseInt(arguments[11]));
+                        }
+
                     } else {
                         System.out.println("Enter organization (String)name");
                         System.out.print("> ");

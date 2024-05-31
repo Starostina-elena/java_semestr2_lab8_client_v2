@@ -174,6 +174,7 @@ public class Product implements Comparable<Product>, Serializable {
                 ", manufactureCost=" + manufactureCost +
                 ", unitOfMeasure=" + unitOfMeasure +
                 ", manufacturer=" + manufacturer +
+                ", creatorId=" + userId +
                 '}';
     }
 

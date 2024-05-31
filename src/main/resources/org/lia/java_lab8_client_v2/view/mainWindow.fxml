@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="780.0" prefHeight="478.0" prefWidth="780.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="org.lia.java_lab8_client_v2.controller.BaseController">
+<TabPane maxHeight="584.0" maxWidth="836.0" minHeight="584.0" minWidth="836.0" prefHeight="584.0" prefWidth="836.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lia.java_lab8_client_v2.controller.BaseController">
   <tabs>
-    <Tab text="Untitled Tab 1">
+    <Tab fx:id="table_tab" text="Таблица">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="515.0" prefWidth="806.0">
+        <AnchorPane>
                <children>
-                  <GridPane prefHeight="631.2" prefWidth="938.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="566.4" prefWidth="840.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -27,22 +27,22 @@
                       <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ScrollPane prefHeight="470.0" prefWidth="797.0" GridPane.rowIndex="1">
+                        <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" GridPane.rowIndex="1">
                           <content>
-                            <AnchorPane>
+                            <AnchorPane maxHeight="512.0" maxWidth="830.0" minHeight="512.0" minWidth="830.0" prefHeight="512.0" prefWidth="830.0">
                                  <children>
-                                    <TableView prefHeight="468.0" prefWidth="797.0" AnchorPane.bottomAnchor="-265.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-595.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="productTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="525.6" prefWidth="838.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn prefWidth="26.399995386600494" text="ID" />
-                                        <TableColumn prefWidth="105.5999984741211" text="name" />
-                                          <TableColumn prefWidth="63.199981689453125" text="coords(x)" />
-                                          <TableColumn prefWidth="57.60003662109375" text="coords(y)" />
-                                          <TableColumn prefWidth="93.60006713867188" text="created at" />
-                                          <TableColumn prefWidth="65.5999755859375" text="price" />
-                                          <TableColumn prefWidth="79.99993896484375" text="part number" />
-                                          <TableColumn prefWidth="114.4000244140625" text="manufacture cost" />
-                                          <TableColumn prefWidth="93.60003662109375" text="manufacturer" />
-                                          <TableColumn prefWidth="75.0" text="creator id" />
+                                        <TableColumn fx:id="id_field_table" prefWidth="26.399995386600494" text="ID" />
+                                        <TableColumn fx:id="name_field_table" prefWidth="105.5999984741211" text="name" />
+                                          <TableColumn fx:id="coord_x_field_table" prefWidth="63.199981689453125" text="coords(x)" />
+                                          <TableColumn fx:id="coords_y_field_table" prefWidth="57.60003662109375" text="coords(y)" />
+                                          <TableColumn fx:id="creation_date_field_table" prefWidth="93.60006713867188" text="created at" />
+                                          <TableColumn fx:id="price_field_table" prefWidth="65.5999755859375" text="price" />
+                                          <TableColumn fx:id="partnumber_field_table" prefWidth="108.00003051757812" text="part number" />
+                                          <TableColumn fx:id="manufacture_cost_field_table" prefWidth="120.79998779296875" text="manufacture cost" />
+                                          <TableColumn fx:id="manufacturer_field_table" prefWidth="119.20001220703125" text="manufacturer" />
+                                          <TableColumn fx:id="creator_id_field_table" prefWidth="69.5999755859375" text="creator id" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -51,9 +51,9 @@
                         </ScrollPane>
                         <ToolBar maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" prefHeight="40.0" prefWidth="150.0">
                           <items>
-                            <Button mnemonicParsing="false" text="New" />
-                              <Button mnemonicParsing="false" text="Edit" />
-                              <Button mnemonicParsing="false" text="Delete" />
+                            <Button fx:id="new_product_button" mnemonicParsing="false" text="New" />
+                              <Button fx:id="edit_product_button" mnemonicParsing="false" onAction="#editElement" text="Edit" />
+                              <Button fx:id="delete_product_button" mnemonicParsing="false" text="Delete" />
                           </items>
                         </ToolBar>
                      </children>
@@ -61,14 +61,9 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Untitled Tab 2">
+    <Tab fx:id="field_tab" text="Область">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Button layoutX="109.0" layoutY="137.0" mnemonicParsing="false" text="Button" />
-                  <Button layoutX="312.0" layoutY="237.0" mnemonicParsing="false" text="Button" />
-                  <Button layoutX="364.0" layoutY="163.0" mnemonicParsing="false" text="Button" />
-               </children></AnchorPane>
+        <AnchorPane fx:id="visualPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>
     </Tab>
   </tabs>

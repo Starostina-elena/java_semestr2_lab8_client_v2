@@ -22,13 +22,18 @@ public class SignUpCommand implements Command {
     public void execute(String[] arguments, String login, String password) {
         this.login = login;
         this.password = password;
-        System.out.println("Enter your name:");
-        System.out.print("> ");
-        Scanner sc = new Scanner(System.in);
-        this.login = sc.nextLine();
-        System.out.println("Enter your password:");
-        System.out.print("> ");
-        passwordString = sc.nextLine();
+        if (arguments.length == 3) {
+            this.login = arguments[1];
+            passwordString = arguments[2];
+        } else {
+            System.out.println("Enter your name:");
+            System.out.print("> ");
+            Scanner sc = new Scanner(System.in);
+            this.login = sc.nextLine();
+            System.out.println("Enter your password:");
+            System.out.print("> ");
+            passwordString = sc.nextLine();
+        }
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             byte[] passwordByte = md.digest(passwordString.getBytes());

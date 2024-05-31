@@ -57,10 +57,11 @@ public class Organization implements Comparable<Organization>, Serializable {
 
     /**Sets employeesCount. Field can pe null but its value should be greater than 0*/
     public void setEmployeesCount(Integer employeesCount) {
-        if (employeesCount == null || employeesCount > 0) {
+        if (employeesCount > 0) {
             this.employeesCount = employeesCount;
-        }
-        else {
+        } else if (employeesCount == 0) {
+            this.employeesCount = null;
+        } else {
             throw new IllegalArgumentException("employeesCount should be more than 0");
         }
     }

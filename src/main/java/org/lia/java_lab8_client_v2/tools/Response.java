@@ -3,6 +3,7 @@ package org.lia.java_lab8_client_v2.tools;
 import org.lia.java_lab8_client_v2.models.Product;
 
 import java.io.Serializable;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class Response implements Serializable {
@@ -11,6 +12,8 @@ public class Response implements Serializable {
 
     private Product product;
     private ArrayList<String> answer = new ArrayList<>();
+    private ArrayDeque<Product> productCollectionResponse;
+    private boolean success;
 
     public Product getProduct() {
         return product;
@@ -28,4 +31,19 @@ public class Response implements Serializable {
         this.answer.add(line);
     }
 
+    public void setProductCollectionResponse(ArrayDeque<Product> productCollectionResponse) {
+        this.productCollectionResponse = productCollectionResponse;
+    }
+
+    public ArrayDeque<Product> getProductCollectionResponse() {
+        return productCollectionResponse;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public  boolean getSuccess() {
+        return success;
+    }
 }

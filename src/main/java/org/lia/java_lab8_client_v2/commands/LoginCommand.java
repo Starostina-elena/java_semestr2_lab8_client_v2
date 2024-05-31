@@ -15,7 +15,7 @@ public class LoginCommand implements Command {
     private static final long serialVersionUID = 1785464768755190753L;
 
     public String description() {
-        return "creates a new user";
+        return "logins a user";
     }
 
     public void execute(String[] arguments, String login, String password) {

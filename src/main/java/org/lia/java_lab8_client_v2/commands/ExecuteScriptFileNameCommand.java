@@ -1,6 +1,8 @@
 package org.lia.java_lab8_client_v2.commands;
 
 import org.lia.java_lab8_client_v2.managers.CommandManager;
+import org.lia.java_lab8_client_v2.models.Product;
+import org.lia.java_lab8_client_v2.tools.Response;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -38,7 +40,13 @@ public class ExecuteScriptFileNameCommand implements Command {
             BufferedReader reader = new BufferedReader(new FileReader(arguments[1]));
             String line = reader.readLine();
             while (line != null) {
-                commandManager.executeCommand(line);
+                Response response = commandManager.executeCommand(line);
+                response.getAnswer().forEach(System.out::println);
+                if (response.getProductCollectionResponse() != null) {
+                    for (Product c: response.getProductCollectionResponse()) {
+                        System.out.println(c);
+                    }
+                }
                 line = reader.readLine();
             }
             reader.close();

@@ -14,15 +14,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**CommandManager class. Provides operations with commands*/
-public class CommandManager {
+public class CommandManager implements Runnable {
 
     private Map<String, Command> commandsManager = new HashMap<>();
     private DatagramSocket ds;
     private DatagramPacket dp;
     private InetAddress host;
     private int port;
-    private String login = "";
-    private String password = "";
+    public String login = "";
+    public String password = "";
 
 
     /**Constructor. Loading of available commands*/
@@ -58,7 +58,7 @@ public class CommandManager {
     }
 
     /**Execution of a line (line could be readen from file)*/
-    public void executeCommand(String line) {
+    public Response executeCommand(String line) {
         String[] tokens = line.split(" ");
         Command command = commandsManager.get(tokens[0]);
         try {
@@ -80,14 +80,13 @@ public class CommandManager {
                 try {
                     ByteArrayInputStream bos = new ByteArrayInputStream(secondaryBuffer);
                     ObjectInputStream objectOutputStream = new ObjectInputStream(bos);
-                    Response response = (Response) objectOutputStream.readObject();
-                    response.getAnswer().forEach(System.out::println);
+                    if (tokens[0].equals("sign_up")) {
+                        this.login = command.getLogin();
+                        this.password = command.getPassword();
+                    }
+                    return (Response) objectOutputStream.readObject();
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
-                }
-                if (tokens[0].equals("sign_up")) {
-                    this.login = command.getLogin();
-                    this.password = command.getPassword();
                 }
             } else {
                 command.execute(tokens, login, password);
@@ -103,6 +102,47 @@ public class CommandManager {
         } catch (IOException e) {
             System.out.println(e);
         }
+        return new Response();
+    }
+
+    public Response executeCommandFromObject(Command command) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(command);
+            ds.send(new DatagramPacket(baos.toByteArray(), baos.size(), host, port));
+            byte[] secondaryBuffer = new byte[1 << 17 - 1];
+            DatagramPacket packetFromServer = new DatagramPacket(secondaryBuffer, 1 << 17 - 1);
+            ds.receive(packetFromServer);
+            secondaryBuffer = packetFromServer.getData();
+            try {
+                ByteArrayInputStream bos = new ByteArrayInputStream(secondaryBuffer);
+                ObjectInputStream objectOutputStream = new ObjectInputStream(bos);
+                if (command.getClass() == SignUpCommand.class || command.getClass() == LoginCommand.class) {
+                    this.login = command.getLogin();
+                    this.password = command.getPassword();
+                }
+                return (Response) objectOutputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            System.out.println("Incorrect command. Use help to see a list of available commands");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println("Incorrect number of arguments, please try again");
+        } catch (PortUnreachableException e) {
+            System.out.println("Server is currently unavailable, please try later");
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return new Response();
+    }
+
+    @Override
+    public void run() {
+        executeFromCommandLine();
     }
 
     public Product getProductById(String line) {
@@ -141,7 +181,13 @@ public class CommandManager {
         System.out.print("> ");
         while(sc.hasNext()) {
             String line = sc.nextLine();
-            executeCommand(line);
+            Response response = executeCommand(line);
+            response.getAnswer().forEach(System.out::println);
+            if (response.getProductCollectionResponse() != null) {
+                for (Product c: response.getProductCollectionResponse()) {
+                    System.out.println(c);
+                }
+            }
             System.out.print("> ");
         }
     }
