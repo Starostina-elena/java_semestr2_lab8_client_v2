@@ -3,17 +3,18 @@ package org.lia.java_lab8_client_v2.controller;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.lia.java_lab8_client_v2.App;
 
+import org.lia.java_lab8_client_v2.commands.ClearCommand;
 import org.lia.java_lab8_client_v2.models.Product;
 
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import org.lia.java_lab8_client_v2.commands.ShowCommand;
 import org.lia.java_lab8_client_v2.tools.Response;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class BaseController {
@@ -113,15 +115,20 @@ public class BaseController {
             var circle = new Circle(10, Color.color(r, g, b));
             circle.setCenterX(x);
             circle.setCenterY(y);
+            circle.setId(String.valueOf(c.getId()));
+            circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    editElementWindow(Long.parseLong(event.getPickResult().getIntersectedNode().getId()));
+                }
+            });
             visualPane.getChildren().add(circle);
         }
     }
 
-    @FXML
-    public void editElement() {
+    public void editElementWindow(long id) {
         try {
             var editLoader = new FXMLLoader(App.class.getResource("view/productInfo.fxml"));
-            //var editRoot = loadFxml(editLoader);
             var editScene = new Scene(editLoader.load());
             var editStage = new Stage();
             editStage.setScene(editScene);
@@ -129,15 +136,57 @@ public class BaseController {
             editStage.setTitle("Product");
             ProductInfoController editController = editLoader.getController();
             editController.setFXApp(FXApp);
-            try {
-                editController.productId = productTable.getSelectionModel().getSelectedItem().getId();
-            } catch (NullPointerException ignored) {}
-            if (editController.productId > 0) {
-                editStage.show();
-                editController.loadInfo();
-            }
+            editController.productId = id;
+            editStage.show();
+            editController.loadInfo();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void editElement() {
+        try {
+            long id = productTable.getSelectionModel().getSelectedItem().getId();
+            if (id > 0) {
+                editElementWindow(id);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void createElement() {
+        try {
+            var addLoader = new FXMLLoader(App.class.getResource("view/productAdd.fxml"));
+            var editScene = new Scene(addLoader.load());
+            var editStage = new Stage();
+            editStage.setScene(editScene);
+            editStage.setResizable(false);
+            editStage.setTitle("Product");
+            ProductAddController addController = addLoader.getController();
+            addController.setFXApp(FXApp);
+            editStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void clearProducts() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting elements");
+        alert.setHeaderText("Do you really want to delete all your elements?");
+        alert.setContentText("Press OK to delete and Cancel not to delete");
+
+        Optional<ButtonType> option = alert.showAndWait();
+
+        if (option.get() == ButtonType.OK) {
+            ClearCommand command = new ClearCommand();
+            command.execute(new String[] {"clear"}, App.commandManager.login, App.commandManager.password);
+            Response response = App.commandManager.executeCommandFromObject(command);
+            alert.close();
         }
     }
 

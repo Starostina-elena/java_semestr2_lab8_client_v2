@@ -49,11 +49,11 @@
                               </AnchorPane>
                           </content>
                         </ScrollPane>
-                        <ToolBar maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" prefHeight="40.0" prefWidth="150.0">
+                        <ToolBar maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="88.0" prefHeight="40.0" prefWidth="111.0">
                           <items>
-                            <Button fx:id="new_product_button" mnemonicParsing="false" text="New" />
+                            <Button fx:id="new_product_button" mnemonicParsing="false" onAction="#createElement" text="New" />
                               <Button fx:id="edit_product_button" mnemonicParsing="false" onAction="#editElement" text="Edit" />
-                              <Button fx:id="delete_product_button" mnemonicParsing="false" text="Delete" />
+                              <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearProducts" text="Clear" />
                           </items>
                         </ToolBar>
                      </children>

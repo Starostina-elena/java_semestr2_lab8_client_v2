@@ -1,6 +1,7 @@
 package org.lia.java_lab8_client_v2.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.lia.java_lab8_client_v2.App;
@@ -37,6 +38,10 @@ public class ProductInfoController {
     private Label creatorIdField;
     @FXML
     private Label messageLabel;
+    @FXML
+    private Button saveProductButton;
+    @FXML
+    private Button deleteButton;
 
 
     public void setFXApp(App FXApp) {
@@ -85,6 +90,23 @@ public class ProductInfoController {
         Response response = App.commandManager.executeCommandFromObject(command);
         messageLabel.setText(response.getAnswer().get(0));
         loadInfo();
+    }
+
+    @FXML
+    public void deleteProduct() {
+        RemoveByIdCommand command = new RemoveByIdCommand();
+        command.execute(
+                new String[] {
+                        "remove_by_id",
+                        idField.getText()
+                }, App.commandManager.login, App.commandManager.password
+        );
+        Response response = App.commandManager.executeCommandFromObject(command);
+        messageLabel.setText(response.getAnswer().get(0));
+        if (response.getSuccess()) {
+            saveProductButton.setDisable(true);
+            deleteButton.setDisable(true);
+        }
     }
 
 }

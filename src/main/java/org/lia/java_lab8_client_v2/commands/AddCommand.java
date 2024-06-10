@@ -76,7 +76,8 @@ public class AddCommand implements Command {
             }
             UnitOfMeasure resUnitOfMeasure;
             if (arguments.length >= 8) {
-                resUnitOfMeasure = UnitOfMeasure.valueOf(arguments[7]);
+                resUnitOfMeasure = null;
+                //resUnitOfMeasure = UnitOfMeasure.valueOf(arguments[7]);
             } else {
                 ArrayList<String> unitOfMeasures = new ArrayList<>();
                 System.out.println("Enter one of unit of measure:");

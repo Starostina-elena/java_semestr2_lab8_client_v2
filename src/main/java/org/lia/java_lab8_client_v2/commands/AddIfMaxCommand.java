@@ -35,7 +35,7 @@ public class AddIfMaxCommand implements Command {
                     price = Integer.parseInt(arguments[2]);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("price is not correct, try again" + arguments[2]);
+                System.out.println("price is not correct, try again: " + arguments[2]);
                 return;
             }
             try {
@@ -50,68 +50,88 @@ public class AddIfMaxCommand implements Command {
             double y;
             while (true) {
                 try {
-                    System.out.println("Enter coordinates (long)x");
-                    System.out.print("> ");
-                    x = in.nextLong();
-                    System.out.println("Enter coordinates (double)y");
-                    System.out.print("> ");
-                    y = in.nextDouble();
+                    if (arguments.length >= 6) {
+                        x = Integer.parseInt(arguments[5]);
+                    } else {
+                        System.out.println("Enter coordinates (long)x");
+                        System.out.print("> ");
+                        x = in.nextLong();
+                    }
+                    if (arguments.length >= 7) {
+                        y = Double.parseDouble(arguments[6]);
+                    } else {
+                        System.out.println("Enter coordinates (double)y");
+                        System.out.print("> ");
+                        y = in.nextDouble();
+                    }
                     coords = new Coordinates(x, y);
                     break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Coordinates are wrong");
+                    return;
                 } catch (InputMismatchException e) {
                     System.out.println("Wrong coordinates, try again");
                     in.nextLine();
                 }
             }
-            ArrayList<String> unitOfMeasures = new ArrayList<>();
-            System.out.println("Enter one of unit of measure:");
-            for (UnitOfMeasure c : UnitOfMeasure.values()) {
-                System.out.println(c);
-                unitOfMeasures.add(c.name());
-            }
-            System.out.print("> ");
-            in.nextLine();
-            String unitOfMeasure = in.nextLine().toUpperCase();
-            while (!unitOfMeasures.contains(unitOfMeasure) & !unitOfMeasure.isBlank()) {
-                System.out.println("Wrong unit of measure, please try again:");
-                System.out.print("> ");
-                unitOfMeasure = in.nextLine().toUpperCase();
-            }
             UnitOfMeasure resUnitOfMeasure;
-            if (unitOfMeasure.isBlank()) {
+            if (arguments.length >= 8) {
                 resUnitOfMeasure = null;
+                //resUnitOfMeasure = UnitOfMeasure.valueOf(arguments[7]);
             } else {
-                resUnitOfMeasure = UnitOfMeasure.valueOf(unitOfMeasure);
+                ArrayList<String> unitOfMeasures = new ArrayList<>();
+                System.out.println("Enter one of unit of measure:");
+                for (UnitOfMeasure c : UnitOfMeasure.values()) {
+                    System.out.println(c);
+                    unitOfMeasures.add(c.name());
+                }
+                System.out.print("> ");
+                in.nextLine();
+                String unitOfMeasure = in.nextLine().toUpperCase();
+                while (!unitOfMeasures.contains(unitOfMeasure) & !unitOfMeasure.isBlank()) {
+                    System.out.println("Wrong unit of measure, please try again:");
+                    System.out.print("> ");
+                    unitOfMeasure = in.nextLine().toUpperCase();
+                }
+                if (unitOfMeasure.isBlank()) {
+                    resUnitOfMeasure = null;
+                } else {
+                    resUnitOfMeasure = UnitOfMeasure.valueOf(unitOfMeasure);
+                }
             }
             Organization org;
             while (true) {
                 try {
-                    System.out.println("Enter organization (String)name");
-                    System.out.print("> ");
-                    String name = in.nextLine();
-                    System.out.println("Enter organization (String)fullName. Press enter to leave this field empty");
-                    System.out.print("> ");
-                    String fullName = in.nextLine();
-                    if (fullName.isBlank()) {
-                        fullName = null;
-                    }
-                    Integer employeesCount;
-                    while (true) {
-                        try {
-                            System.out.println("Enter organization (Integer)employeesCount. Press enter to leave this field empty");
-                            System.out.print("> ");
-                            String inEmployeesCount = in.nextLine();
-                            if (inEmployeesCount.isBlank()) {
-                                employeesCount = null;
-                            } else {
-                                employeesCount = Integer.parseInt(inEmployeesCount);
-                            }
-                            break;
-                        } catch (NumberFormatException e) {
-                            System.out.println("Wrong employeesCount. Please try again:");
+                    if (arguments.length >= 9) {
+                        org = new Organization(arguments[8], arguments[9], Integer.parseInt(arguments[10]));
+                    } else {
+                        System.out.println("Enter organization (String)name");
+                        System.out.print("> ");
+                        String name = in.nextLine();
+                        System.out.println("Enter organization (String)fullName. Press enter to leave this field empty");
+                        System.out.print("> ");
+                        String fullName = in.nextLine();
+                        if (fullName.isBlank()) {
+                            fullName = "";
                         }
+                        Integer employeesCount;
+                        while (true) {
+                            try {
+                                System.out.println("Enter organization (Integer)employeesCount. Press enter to leave this field empty");
+                                System.out.print("> ");
+                                String inEmployeesCount = in.nextLine();
+                                if (inEmployeesCount.isBlank()) {
+                                    employeesCount = null;
+                                } else {
+                                    employeesCount = Integer.parseInt(inEmployeesCount);
+                                }
+                                break;
+                            } catch (NumberFormatException e) {
+                                System.out.println("Wrong employeesCount. Please try again:");
+                            }
+                        }
+                        org = new Organization(name, fullName, employeesCount);
                     }
-                    org = new Organization(name, fullName, employeesCount);
                     break;
                 } catch (IllegalArgumentException e) {
                     System.out.println(e + ". Please try again");
