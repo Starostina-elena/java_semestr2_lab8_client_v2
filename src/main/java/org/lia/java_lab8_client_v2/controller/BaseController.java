@@ -23,6 +23,7 @@ import org.lia.java_lab8_client_v2.tools.Response;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 
 public class BaseController {
@@ -53,6 +54,14 @@ public class BaseController {
     private AnchorPane visualPane;
     @FXML
     private Tab field_tab;
+    @FXML
+    private Tab table_tab;
+    @FXML
+    private Button new_product_button;
+    @FXML
+    private Button edit_product_button;
+    @FXML
+    private Button clearButton;
 
     public void setFXApp(App FXApp) {
         this.FXApp = FXApp;
@@ -133,9 +142,10 @@ public class BaseController {
             var editStage = new Stage();
             editStage.setScene(editScene);
             editStage.setResizable(false);
-            editStage.setTitle("Product");
+            editStage.setTitle(FXApp.local_bundle.getString("Product"));
             ProductInfoController editController = editLoader.getController();
             editController.setFXApp(FXApp);
+            editController.setLanguage();
             editController.productId = id;
             editStage.show();
             editController.loadInfo();
@@ -164,9 +174,10 @@ public class BaseController {
             var editStage = new Stage();
             editStage.setScene(editScene);
             editStage.setResizable(false);
-            editStage.setTitle("Product");
+            editStage.setTitle(FXApp.local_bundle.getString("Product"));
             ProductAddController addController = addLoader.getController();
             addController.setFXApp(FXApp);
+            addController.setLanguage();
             editStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -188,6 +199,25 @@ public class BaseController {
             Response response = App.commandManager.executeCommandFromObject(command);
             alert.close();
         }
+    }
+
+    public void setLanguage() {
+        ResourceBundle bundle = this.FXApp.local_bundle;
+        table_tab.setText(bundle.getString("Table"));
+        id_field_table.setText(bundle.getString("ID"));
+        name_field_table.setText(bundle.getString("name"));
+        coord_x_field_table.setText(bundle.getString("coords(x)"));
+        coords_y_field_table.setText(bundle.getString("coords(y)"));
+        creation_date_field_table.setText(bundle.getString("created_at"));
+        price_field_table.setText(bundle.getString("price"));
+        partnumber_field_table.setText(bundle.getString("part_number"));
+        manufacture_cost_field_table.setText(bundle.getString("manufacture_cost"));
+        manufacturer_field_table.setText(bundle.getString("manufacturer"));
+        creator_id_field_table.setText(bundle.getString("creator_id"));
+        new_product_button.setText(bundle.getString("New"));
+        edit_product_button.setText(bundle.getString("Edit"));
+        clearButton.setText(bundle.getString("Clear"));
+        field_tab.setText(bundle.getString("Area"));
     }
 
 }

@@ -14,7 +14,7 @@
 
 <TabPane maxHeight="584.0" maxWidth="836.0" minHeight="584.0" minWidth="836.0" prefHeight="584.0" prefWidth="836.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lia.java_lab8_client_v2.controller.BaseController">
   <tabs>
-    <Tab fx:id="table_tab" text="Таблица">
+    <Tab fx:id="table_tab" text="Table">
       <content>
         <AnchorPane>
                <children>
@@ -61,7 +61,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab fx:id="field_tab" text="Область">
+    <Tab fx:id="field_tab" text="Area">
       <content>
         <AnchorPane fx:id="visualPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>

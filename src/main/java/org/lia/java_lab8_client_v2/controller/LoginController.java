@@ -1,5 +1,7 @@
 package org.lia.java_lab8_client_v2.controller;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import org.lia.java_lab8_client_v2.App;
 
@@ -8,6 +10,8 @@ import javafx.scene.control.Label;
 import org.lia.java_lab8_client_v2.commands.LoginCommand;
 import org.lia.java_lab8_client_v2.commands.SignUpCommand;
 import org.lia.java_lab8_client_v2.tools.Response;
+
+import java.util.ResourceBundle;
 
 public class LoginController {
     private App FXApp;
@@ -23,6 +27,14 @@ public class LoginController {
     private Label signup_message_label;
     @FXML
     private Label login_message_label;
+    @FXML
+    private Tab login_tab;
+    @FXML
+    private Tab signup_tab;
+    @FXML
+    private Button login_button;
+    @FXML
+    private Button signup_button;
 
     public void setFXApp(App FXApp) {
         this.FXApp = FXApp;
@@ -65,4 +77,17 @@ public class LoginController {
             }
         }
     }
+
+    public void setLanguage() {
+        ResourceBundle bundle = this.FXApp.local_bundle;
+        login_tab.setText(bundle.getString("Login"));
+        signup_tab.setText(bundle.getString("Sign_Up"));
+        login_login.setPromptText(bundle.getString("login"));
+        password_login.setPromptText(bundle.getString("password"));
+        login_button.setText(bundle.getString("Login"));
+        login_signup.setPromptText(bundle.getString("login"));
+        password_signup.setPromptText(bundle.getString("password"));
+        signup_button.setText(bundle.getString("Sign_Up"));
+    }
+
 }

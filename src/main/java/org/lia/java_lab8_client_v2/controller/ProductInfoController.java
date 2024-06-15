@@ -8,6 +8,8 @@ import org.lia.java_lab8_client_v2.App;
 import org.lia.java_lab8_client_v2.commands.*;
 import org.lia.java_lab8_client_v2.tools.Response;
 
+import java.util.ResourceBundle;
+
 public class ProductInfoController {
     private App FXApp;
     public long productId = 0;
@@ -42,7 +44,30 @@ public class ProductInfoController {
     private Button saveProductButton;
     @FXML
     private Button deleteButton;
-
+    @FXML
+    private Label idLabel;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label coordXLabel;
+    @FXML
+    private Label creationDateLabel;
+    @FXML
+    private Label priceLabel;
+    @FXML
+    private Label partNumberLabel;
+    @FXML
+    private Label manufactureCostLabel;
+    @FXML
+    private Label manufacturerNameLabel;
+    @FXML
+    private Label manufacturerFullNameLabel;
+    @FXML
+    private Label manufacturerEmployeesLabel;
+    @FXML
+    private Label creatorIdLabel;
+    @FXML
+    private Label coordsYLabel;
 
     public void setFXApp(App FXApp) {
         this.FXApp = FXApp;
@@ -107,6 +132,24 @@ public class ProductInfoController {
             saveProductButton.setDisable(true);
             deleteButton.setDisable(true);
         }
+    }
+
+    public void setLanguage() {
+        ResourceBundle bundle = this.FXApp.local_bundle;
+        idLabel.setText(bundle.getString("Id"));
+        nameLabel.setText(bundle.getString("Name"));
+        coordXLabel.setText(bundle.getString("Coordinates_(x)"));
+        creationDateLabel.setText(bundle.getString("Creation_date"));
+        priceLabel.setText(bundle.getString("Price"));
+        partNumberLabel.setText(bundle.getString("Part_Number"));
+        manufactureCostLabel.setText(bundle.getString("Manufacture_Cost"));
+        manufacturerNameLabel.setText(bundle.getString("Manufacturer"));
+        manufacturerFullNameLabel.setText(bundle.getString("Manufacturer_Full_Name"));
+        manufacturerEmployeesLabel.setText(bundle.getString("Manufacturer_Employees"));
+        creatorIdLabel.setText(bundle.getString("Creator_Id"));
+        saveProductButton.setText(bundle.getString("Save"));
+        deleteButton.setText(bundle.getString("Delete"));
+        coordsYLabel.setText(bundle.getString("Coordinates_(y)"));
     }
 
 }

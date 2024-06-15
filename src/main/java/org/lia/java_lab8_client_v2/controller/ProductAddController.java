@@ -1,12 +1,15 @@
 package org.lia.java_lab8_client_v2.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.lia.java_lab8_client_v2.App;
 import org.lia.java_lab8_client_v2.commands.*;
 import org.lia.java_lab8_client_v2.tools.Response;
+
+import java.util.ResourceBundle;
 
 public class ProductAddController {
     private App FXApp;
@@ -34,6 +37,26 @@ public class ProductAddController {
     private Label messageLabel;
     @FXML
     private CheckBox addIfMaxCheckBox;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label coordXLabel;
+    @FXML
+    private Label coordsYLabel;
+    @FXML
+    private Label priceLabel;
+    @FXML
+    private Label partNumberLabel;
+    @FXML
+    private Label manufactureCostLabel;
+    @FXML
+    private Label manufacturerNameLabel;
+    @FXML
+    private Label manufacturerFullNameLabel;
+    @FXML
+    private Label manufacturerEmployeesLabel;
+    @FXML
+    private Button saveProductButton;
 
 
     public void setFXApp(App FXApp) {
@@ -63,6 +86,21 @@ public class ProductAddController {
         }, App.commandManager.login, App.commandManager.password);
         Response response = App.commandManager.executeCommandFromObject(command);
         messageLabel.setText(response.getAnswer().get(0));
+    }
+
+    public void setLanguage() {
+        ResourceBundle bundle = this.FXApp.local_bundle;
+        nameLabel.setText(bundle.getString("Name"));
+        coordXLabel.setText(bundle.getString("Coordinates_(x)"));
+        coordsYLabel.setText(bundle.getString("Coordinates_(y)"));
+        priceLabel.setText(bundle.getString("Price"));
+        partNumberLabel.setText(bundle.getString("Part_Number"));
+        manufactureCostLabel.setText(bundle.getString("Manufacture_Cost"));
+        manufacturerNameLabel.setText(bundle.getString("Manufacturer"));
+        manufacturerFullNameLabel.setText(bundle.getString("Manufacturer_Full_Name"));
+        manufacturerEmployeesLabel.setText(bundle.getString("Manufacturer_Employees"));
+        addIfMaxCheckBox.setText(bundle.getString("Add_if_max"));
+        saveProductButton.setText(bundle.getString("Save"));
     }
 
 }
