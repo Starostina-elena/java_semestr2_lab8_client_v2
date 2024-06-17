@@ -8,6 +8,8 @@ import org.lia.java_lab8_client_v2.App;
 import org.lia.java_lab8_client_v2.commands.*;
 import org.lia.java_lab8_client_v2.tools.Response;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 public class ProductInfoController {
@@ -81,7 +83,8 @@ public class ProductInfoController {
         nameField.setText(response.getProduct().getName());
         coordsXField.setText(response.getProduct().getCoordinates().getX() + "");
         coordsYField.setText(response.getProduct().getCoordinates().getY() + "");
-        creationDateField.setText(response.getProduct().getCreationDate() + "");
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(FXApp.local_bundle.getLocale());
+        creationDateField.setText(response.getProduct().getCreationDate().toLocalDate().format(formatter));
         priceField.setText(response.getProduct().getPrice() + "");
         partNumberField.setText(response.getProduct().getPartNumber());
         manufactureCostField.setText(response.getProduct().getManufactureCost() + "");

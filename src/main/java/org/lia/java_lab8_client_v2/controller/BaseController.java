@@ -2,6 +2,7 @@ package org.lia.java_lab8_client_v2.controller;
 
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +23,10 @@ import org.lia.java_lab8_client_v2.commands.ShowCommand;
 import org.lia.java_lab8_client_v2.tools.Response;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
 
 public class BaseController {
@@ -84,7 +85,6 @@ public class BaseController {
         name_field_table.setCellValueFactory(product -> new SimpleStringProperty(product.getValue().getName()));
         coord_x_field_table.setCellValueFactory(product -> new SimpleLongProperty(product.getValue().getCoordinates().getX()).asObject());
         coords_y_field_table.setCellValueFactory(product -> new SimpleDoubleProperty(product.getValue().getCoordinates().getY()).asObject());
-        creation_date_field_table.setCellValueFactory(product -> new SimpleStringProperty(product.getValue().getCreationDate().toString()));
         price_field_table.setCellValueFactory(product -> new SimpleIntegerProperty(product.getValue().getPrice()).asObject());
         partnumber_field_table.setCellValueFactory(product -> new SimpleStringProperty(product.getValue().getPartNumber()));
         manufacture_cost_field_table.setCellValueFactory(product -> new SimpleIntegerProperty(product.getValue().getManufactureCost()).asObject());
@@ -178,9 +178,7 @@ public class BaseController {
             if (id > 0) {
                 editElementWindow(id);
             }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        } catch (NullPointerException ignored) {}
     }
 
     @FXML
@@ -235,6 +233,8 @@ public class BaseController {
         edit_product_button.setText(bundle.getString("Edit"));
         clearButton.setText(bundle.getString("Clear"));
         field_tab.setText(bundle.getString("Area"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(bundle.getLocale());
+        creation_date_field_table.setCellValueFactory(product -> new SimpleStringProperty(product.getValue().getCreationDate().toLocalDate().format(formatter)));
     }
 
 }
