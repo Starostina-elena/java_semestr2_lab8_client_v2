@@ -20,7 +20,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        local_bundle = ResourceBundle.getBundle("locales/gui", new Locale("ru", "RU"));
+        local_bundle = ResourceBundle.getBundle("locales/gui", new Locale("en", "EN"));
         this.primaryStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());

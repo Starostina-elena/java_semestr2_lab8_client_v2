@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -49,11 +50,12 @@
                               </AnchorPane>
                           </content>
                         </ScrollPane>
-                        <ToolBar maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="88.0" prefHeight="40.0" prefWidth="111.0">
+                        <ToolBar maxHeight="40.0" maxWidth="832.0" minHeight="40.0" minWidth="88.0" prefHeight="40.0" prefWidth="832.0">
                           <items>
                             <Button fx:id="new_product_button" mnemonicParsing="false" onAction="#createElement" text="New" />
                               <Button fx:id="edit_product_button" mnemonicParsing="false" onAction="#editElement" text="Edit" />
                               <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearProducts" text="Clear" />
+                              <ComboBox fx:id="languageComboBox" onAction="#languageComboBoxChanged" prefWidth="150.0" />
                           </items>
                         </ToolBar>
                      </children>

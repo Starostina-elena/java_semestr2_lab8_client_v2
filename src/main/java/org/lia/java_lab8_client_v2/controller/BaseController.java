@@ -22,6 +22,8 @@ import org.lia.java_lab8_client_v2.commands.ShowCommand;
 import org.lia.java_lab8_client_v2.tools.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -62,6 +64,13 @@ public class BaseController {
     private Button edit_product_button;
     @FXML
     private Button clearButton;
+    @FXML
+    private ComboBox languageComboBox;
+
+    private final HashMap<String, Locale> localeMap = new HashMap<>() {{
+        put("English", new Locale("en", "EN"));
+        put("Русский", new Locale("ru", "RU"));
+    }};
 
     public void setFXApp(App FXApp) {
         this.FXApp = FXApp;
@@ -69,6 +78,8 @@ public class BaseController {
 
     @FXML
     public void initialize() {
+        languageComboBox.setItems(FXCollections.observableArrayList(localeMap.keySet()));
+        languageComboBox.setValue("English");
         id_field_table.setCellValueFactory(product -> new SimpleLongProperty(product.getValue().getId()).asObject());
         name_field_table.setCellValueFactory(product -> new SimpleStringProperty(product.getValue().getName()));
         coord_x_field_table.setCellValueFactory(product -> new SimpleLongProperty(product.getValue().getCoordinates().getX()).asObject());
@@ -80,6 +91,12 @@ public class BaseController {
         manufacturer_field_table.setCellValueFactory(product -> new SimpleStringProperty(product.getValue().getManufacturer().getName()));
         creator_id_field_table.setCellValueFactory(product -> new SimpleLongProperty(product.getValue().getUserId()).asObject());
         refresh();
+    }
+
+    @FXML
+    public void languageComboBoxChanged() {
+        this.FXApp.local_bundle = ResourceBundle.getBundle("locales/gui", localeMap.get(languageComboBox.getValue()));
+        setLanguage();
     }
 
     public void refresh() {
