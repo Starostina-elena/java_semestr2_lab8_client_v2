@@ -43,7 +43,7 @@ public class LoginController {
     @FXML
     void okLogin() {
         if (login_login.getText().isBlank() || password_login.getText().isBlank()) {
-            login_message_label.setText("Login or password are empty");
+            login_message_label.setText(FXApp.local_bundle.getString("Login_or_password_are_empty"));
         } else {
             LoginCommand command = new LoginCommand();
             command.execute(new String[] {"login", login_login.getText(), password_login.getText()}, "", "");
@@ -52,9 +52,8 @@ public class LoginController {
                 App.commandManager.login = command.getLogin();
                 App.commandManager.password = command.getPassword();
                 FXApp.startMainWindow();
-
             } else {
-                login_message_label.setText("Wrong login or password. Please try again");
+                login_message_label.setText(FXApp.local_bundle.getString("Wrong_login_or_password"));
             }
         }
     }
@@ -62,7 +61,7 @@ public class LoginController {
     @FXML
     void okSignUp() {
         if (login_signup.getText().isBlank() || password_signup.getText().isBlank()) {
-            signup_message_label.setText("Login or password are empty");
+            signup_message_label.setText(FXApp.local_bundle.getString("Login_or_password_are_empty"));
         } else {
             SignUpCommand command = new SignUpCommand();
             command.execute(new String[] {"sign_up", login_signup.getText(), password_signup.getText()}, "", "");
@@ -71,7 +70,6 @@ public class LoginController {
                 App.commandManager.login = command.getLogin();
                 App.commandManager.password = command.getPassword();
                 FXApp.startMainWindow();
-
             } else {
                 signup_message_label.setText(response.getAnswer().get(0));
             }

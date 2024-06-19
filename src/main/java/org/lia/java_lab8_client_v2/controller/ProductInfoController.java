@@ -10,6 +10,7 @@ import org.lia.java_lab8_client_v2.tools.Response;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class ProductInfoController {
@@ -101,22 +102,31 @@ public class ProductInfoController {
     @FXML
     public void saveProduct() {
         UpdateCommand command = new UpdateCommand();
-        command.execute(new String[] {
-                "update",
-                String.valueOf(productId),
-                nameField.getText(),
-                priceField.getText(),
-                partNumberField.getText(),
-                manufactureCostField.getText(),
-                coordsXField.getText(),
-                coordsYField.getText(),
-                " ",
-                manufacturerField.getText(),
-                manufacturerFullnameField.getText(),
-                manufacturerEmployeesField.getText(),
-        }, App.commandManager.login, App.commandManager.password);
+        try {
+            command.execute(new String[] {
+                    "update",
+                    String.valueOf(productId),
+                    nameField.getText(),
+                    priceField.getText(),
+                    partNumberField.getText(),
+                    manufactureCostField.getText(),
+                    coordsXField.getText(),
+                    coordsYField.getText(),
+                    " ",
+                    manufacturerField.getText(),
+                    manufacturerFullnameField.getText(),
+                    manufacturerEmployeesField.getText(),
+            }, App.commandManager.login, App.commandManager.password);
+        } catch (IllegalArgumentException e) {
+            messageLabel.setText(e.getMessage());
+            return;
+        }
         Response response = App.commandManager.executeCommandFromObject(command);
-        messageLabel.setText(response.getAnswer().get(0));
+        try {
+            messageLabel.setText(FXApp.local_bundle.getString(response.getAnswer().get(0)));
+        } catch (MissingResourceException e) {
+            messageLabel.setText(response.getAnswer().get(0));
+        }
         loadInfo();
     }
 
@@ -130,7 +140,11 @@ public class ProductInfoController {
                 }, App.commandManager.login, App.commandManager.password
         );
         Response response = App.commandManager.executeCommandFromObject(command);
-        messageLabel.setText(response.getAnswer().get(0));
+        try {
+            messageLabel.setText(FXApp.local_bundle.getString(response.getAnswer().get(0)));
+        } catch (MissingResourceException e) {
+            messageLabel.setText(response.getAnswer().get(0));
+        }
         if (response.getSuccess()) {
             saveProductButton.setDisable(true);
             deleteButton.setDisable(true);

@@ -9,6 +9,7 @@ import org.lia.java_lab8_client_v2.App;
 import org.lia.java_lab8_client_v2.commands.*;
 import org.lia.java_lab8_client_v2.tools.Response;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class ProductAddController {
@@ -71,21 +72,31 @@ public class ProductAddController {
         } else {
             command = new AddCommand();
         }
-        command.execute(new String[] {
-                "add",
-                nameField.getText(),
-                priceField.getText(),
-                partNumberField.getText(),
-                manufactureCostField.getText(),
-                coordsXField.getText(),
-                coordsYField.getText(),
-                " ",
-                manufacturerField.getText(),
-                manufacturerFullnameField.getText(),
-                manufacturerEmployeesField.getText(),
-        }, App.commandManager.login, App.commandManager.password);
+        try {
+            command.execute(new String[] {
+                    "add",
+                    nameField.getText(),
+                    priceField.getText(),
+                    partNumberField.getText(),
+                    manufactureCostField.getText(),
+                    coordsXField.getText(),
+                    coordsYField.getText(),
+                    " ",
+                    manufacturerField.getText(),
+                    manufacturerFullnameField.getText(),
+                    manufacturerEmployeesField.getText(),
+            }, App.commandManager.login, App.commandManager.password);
+        } catch (IllegalArgumentException e) {
+            messageLabel.setText(e.getMessage());
+            return;
+        }
         Response response = App.commandManager.executeCommandFromObject(command);
-        messageLabel.setText(response.getAnswer().get(0));
+        try {
+            messageLabel.setText(this.FXApp.local_bundle.getString(response.getAnswer().get(0)));
+        } catch (MissingResourceException e) {
+            messageLabel.setText(response.getAnswer().get(0));
+        }
+
     }
 
     public void setLanguage() {

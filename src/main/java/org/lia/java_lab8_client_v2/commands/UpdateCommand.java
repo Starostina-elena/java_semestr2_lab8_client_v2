@@ -24,7 +24,7 @@ public class UpdateCommand implements Command {
         return "update product by it's id. Pattern: update (long)id (String)newName (Integer)newPrice(may be null, use empty string) (String)newPartNumber (Integer)newManufactureCost";
     }
 
-    public void execute(String[] arguments, String login, String password) {
+    public void execute(String[] arguments, String login, String password) throws IllegalArgumentException {
         this.login = login;
         this.password = password;
         productId = Long.parseLong(arguments[1]);
@@ -37,15 +37,12 @@ public class UpdateCommand implements Command {
                     price = Integer.parseInt(arguments[3]);
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
-                System.out.println("price is not correct, try again" + arguments[2]);
-                return;
+                throw new NumberFormatException("price is not correct, try again" + arguments[2]);
             }
             try {
                 Integer.parseInt(arguments[5]);
             } catch (NumberFormatException e) {
-                System.out.println("manufactureCost is not correct, try again");
-                return;
+                throw new NumberFormatException("manufactureCost is not correct, try again");
             }
             Scanner in = new Scanner(System.in);
             Coordinates coords;
@@ -70,8 +67,7 @@ public class UpdateCommand implements Command {
                     coords = new Coordinates(x, y);
                     break;
                 } catch (NumberFormatException e) {
-                    System.out.println("Coordinates are wrong");
-                    return;
+                    throw new NumberFormatException("Coordinates are wrong");
                 } catch (InputMismatchException e) {
                     System.out.println("Wrong coordinates, try again");
                     in.nextLine();
@@ -142,14 +138,14 @@ public class UpdateCommand implements Command {
                     }
                     break;
                 } catch (IllegalArgumentException e) {
-                    System.out.println(e + ". Please try again");
+                    throw new IllegalArgumentException(e + ". Please try again");
                 }
             }
 
             product = new Product(arguments[2], coords, price, arguments[4],
                     Integer.parseInt(arguments[5]), resUnitOfMeasure, org);
         } catch (IllegalArgumentException e) {
-            System.out.println(e + ". Please try again");
+            throw new IllegalArgumentException(e + ". Please try again");
         }
     }
 

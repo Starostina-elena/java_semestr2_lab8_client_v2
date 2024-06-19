@@ -1,5 +1,6 @@
 package org.lia.java_lab8_client_v2.controller;
 
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
@@ -12,7 +13,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.lia.java_lab8_client_v2.App;
 
 import org.lia.java_lab8_client_v2.commands.ClearCommand;
@@ -31,6 +35,7 @@ import java.util.*;
 
 public class BaseController {
     private App FXApp;
+    private HashSet<Long> currentElements = new HashSet<>();
     @FXML
     private TableView<Product> productTable;
     @FXML
@@ -148,7 +153,19 @@ public class BaseController {
                     editElementWindow(Long.parseLong(event.getPickResult().getIntersectedNode().getId()));
                 }
             });
+            var id = new Text(String.valueOf(c.getId()));
+            id.setX(x - 8);
+            id.setY(y + 5);
+            id.setMouseTransparent(true);
             visualPane.getChildren().add(circle);
+            visualPane.getChildren().add(id);
+            if (!currentElements.contains(c.getId())) {
+                var transition = new ScaleTransition(Duration.millis(4500), circle);
+                transition.setByX(1.5f);
+                transition.setByY(1.5f);
+                transition.play();
+            }
+            currentElements.add(c.getId());
         }
     }
 
@@ -202,9 +219,9 @@ public class BaseController {
     @FXML
     public void clearProducts() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Deleting elements");
-        alert.setHeaderText("Do you really want to delete all your elements?");
-        alert.setContentText("Press OK to delete and Cancel not to delete");
+        alert.setTitle(FXApp.local_bundle.getString("Deleting_elements"));
+        alert.setHeaderText(FXApp.local_bundle.getString("Do_you_really_want_to_delete_all_your_elements"));
+        alert.setContentText(FXApp.local_bundle.getString("Press_OK_to_delete_and_Cancel_not_to_delete"));
 
         Optional<ButtonType> option = alert.showAndWait();
 
