@@ -1,0 +1,596 @@
+@startuml
+class org.lia.java_lab8_client_v2.controller.ProductInfoController {
+- App FXApp
++ long productId
+- Label idField
+- TextField nameField
+- TextField coordsXField
+- TextField coordsYField
+- Label creationDateField
+- TextField priceField
+- TextField partNumberField
+- TextField manufactureCostField
+- TextField manufacturerField
+- TextField manufacturerFullnameField
+- TextField manufacturerEmployeesField
+- Label creatorIdField
+- Label messageLabel
+- Button saveProductButton
+- Button deleteButton
+- Label idLabel
+- Label nameLabel
+- Label coordXLabel
+- Label creationDateLabel
+- Label priceLabel
+- Label partNumberLabel
+- Label manufactureCostLabel
+- Label manufacturerNameLabel
+- Label manufacturerFullNameLabel
+- Label manufacturerEmployeesLabel
+- Label creatorIdLabel
+- Label coordsYLabel
++ void setFXApp(App)
++ void loadInfo()
++ void saveProduct()
++ void deleteProduct()
++ void setLanguage()
+}
+
+
+class org.lia.java_lab8_client_v2.controller.ProductAddController {
+- App FXApp
++ long productId
+- TextField nameField
+- TextField coordsXField
+- TextField coordsYField
+- TextField priceField
+- TextField partNumberField
+- TextField manufactureCostField
+- TextField manufacturerField
+- TextField manufacturerFullnameField
+- TextField manufacturerEmployeesField
+- Label messageLabel
+- CheckBox addIfMaxCheckBox
+- Label nameLabel
+- Label coordXLabel
+- Label coordsYLabel
+- Label priceLabel
+- Label partNumberLabel
+- Label manufactureCostLabel
+- Label manufacturerNameLabel
+- Label manufacturerFullNameLabel
+- Label manufacturerEmployeesLabel
+- Button saveProductButton
++ void setFXApp(App)
++ void saveProduct()
++ void setLanguage()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.AddIfMaxCommand {
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ Product product
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.RemoveByIdCommand {
++ Product product
+- {static} long serialVersionUID
+- long id
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.RemoveLowerCommand {
++ Product product
+- {static} long serialVersionUID
+- long id
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.managers.CommandManager {
+- Map<String,Command> commandsManager
+- DatagramSocket ds
+- DatagramPacket dp
+- InetAddress host
+- int port
++ String login
++ String password
++ long userId
++ Response executeCommand(String)
++ Response executeCommandFromObject(Command)
++ void run()
++ Product getProductById(String)
++ void executeFromCommandLine()
++ Map<String,Command> getCommandsList()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.SignUpCommand {
++ Product product
+- String login
+- String passwordString
+- byte[] passwordByte
+- String password
++ String localDescription
+- {static} long serialVersionUID
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.ExitCommand {
++ Product product
+~ CommandManager commandManager
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.ClearCommand {
++ Product product
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+interface org.lia.java_lab8_client_v2.commands.Command {
++ {static} Product product
+~ {static} String login
+~ {static} String password
++ {static} String localDescription
+~ void execute(String[],String,String)
+~ String description()
++ String getLocalDescription()
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.controller.BaseController {
+- App FXApp
+- HashSet<Long> currentElements
+- TableView<Product> productTable
+- TableColumn<Product,Long> id_field_table
+- TableColumn<Product,String> name_field_table
+- TableColumn<Product,Long> coord_x_field_table
+- TableColumn<Product,Double> coords_y_field_table
+- TableColumn<Product,String> creation_date_field_table
+- TableColumn<Product,Integer> price_field_table
+- TableColumn<Product,String> partnumber_field_table
+- TableColumn<Product,Integer> manufacture_cost_field_table
+- TableColumn<Product,String> manufacturer_field_table
+- TableColumn<Product,Long> creator_id_field_table
+- AnchorPane visualPane
+- Tab field_tab
+- Tab table_tab
+- Button new_product_button
+- Button edit_product_button
+- Button clearButton
+- ComboBox languageComboBox
+- Button countByPartNumberButton
+- Button executeScriptButton
+- Button exitButton
+- Button helpButton
+- Button infoButton
+- Button minByIdButton
+- Button manufacturersButton
+- Button removeHeadButton
+- Button removeLowerButton
+- Tab menuTab
+- Label usernameLabel
+- Label userId
+- TextField scriptFileNameField
+- TextField removeLowerField
+- TextField partNumberField
+- TextArea outputField
+- HashMap<String,Locale> localeMap
++ void setFXApp(App)
++ void initialize()
++ void languageComboBoxChanged()
++ void refresh()
+- void loadCollection()
++ void editElementWindow(long)
++ void editElement()
++ void createElement()
++ void clearProducts()
++ void executeScript()
++ void helpCommand()
++ void infoCommand()
++ void exitCommand()
++ void countByPartNumberCommand()
++ void minByIdCommand()
++ void manufacturersCommand()
++ void removeHeadCommand()
++ void removeLowerCommand()
++ void setLanguage()
+}
+
+
+class org.lia.java_lab8_client_v2.models.Product {
+- {static} long serialVersionUID
+- long id
+- String name
+- Coordinates coordinates
+- java.sql.Date creationDate
+- Integer price
+- String partNumber
+- Integer manufactureCost
+- UnitOfMeasure unitOfMeasure
+- Organization manufacturer
+- long userId
+- {static} long currentId
++ long getId()
++ String getName()
++ void setName(String)
++ Coordinates getCoordinates()
++ void setCoordinates(Coordinates)
++ java.sql.Date getCreationDate()
++ Integer getPrice()
++ void setPrice(Integer)
++ String getPartNumber()
++ void setPartNumber(String)
++ Integer getManufactureCost()
++ void setManufactureCost(Integer)
++ UnitOfMeasure getUnitOfMeasure()
++ void setUnitOfMeasure(UnitOfMeasure)
++ Organization getManufacturer()
++ void setManufacturer(Organization)
++ void setUserId(long)
++ long getUserId()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
++ int compareTo(Product)
++ {static} void updateId(long)
+}
+
+
+class org.lia.java_lab8_client_v2.controller.LoginController {
+- App FXApp
+- TextField login_login
+- PasswordField password_login
+- TextField login_signup
+- PasswordField password_signup
+- Label signup_message_label
+- Label login_message_label
+- Tab login_tab
+- Tab signup_tab
+- Button login_button
+- Button signup_button
++ void setFXApp(App)
+~ void okLogin()
+~ void okSignUp()
++ void setLanguage()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.PrintFieldAscendingManufacturerCommand {
++ Product product
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.UpdateCommand {
+- {static} long serialVersionUID
+- String login
+- String password
+~ long productId
++ String localDescription
++ Product product
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.tools.ReplaceProductCommand {
+- {static} long serialVersionUID
+- Product old_product
+- Product new_product
+}
+
+class org.lia.java_lab8_client_v2.commands.ExecuteScriptFileNameCommand {
+- CommandManager commandManager
+- ArrayDeque<String> scriptStack
+- String login
+- String password
+- TextArea outputField
+- ResourceBundle bundle
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.MinByIdCommand {
++ Product product
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.GetByIdCommand {
++ Product product
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
+- long id
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.App {
++ {static} Stage primaryStage
++ {static} CommandManager commandManager
++ ResourceBundle local_bundle
++ void start(Stage)
++ {static} void main(String[])
++ void startMainWindow()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.AddCommand {
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ Product product
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+enum org.lia.java_lab8_client_v2.models.UnitOfMeasure {
++  CENTIMETERS
++  SQUARE_METERS
++  MILLILITERS
++  GRAMS
+}
+
+class org.lia.java_lab8_client_v2.commands.CountByPartNumberCommand {
+- {static} long serialVersionUID
++ Product product
+- String login
+- String password
+- String partNumber
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.InfoCommand {
++ Product product
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.models.Organization {
+- {static} long serialVersionUID
+- Long id
+- String name
+- String fullName
+- Integer employeesCount
+- {static} Long currentId
++ Long getId()
++ String getName()
++ void setName(String)
++ String getFullName()
++ void setFullName(String)
++ Integer getEmployeesCount()
++ void setEmployeesCount(Integer)
++ {static} void updateId(long)
++ boolean equals(Object)
++ int hashCode()
++ String toString()
++ int compareTo(Organization)
+}
+
+
+class org.lia.java_lab8_client_v2.tools.Response {
+- {static} long serialVersionUID
+- Product product
+- ArrayList<String> answer
+- ArrayDeque<Product> productCollectionResponse
+- boolean success
+- long userId
+- long countObjects
++ Product getProduct()
++ void setProduct(Product)
++ ArrayList<String> getAnswer()
++ void addAnswer(String)
++ void setProductCollectionResponse(ArrayDeque<Product>)
++ ArrayDeque<Product> getProductCollectionResponse()
++ void setSuccess(boolean)
++ boolean getSuccess()
++ void setUserId(long)
++ long getUserId()
++ long getCountObjects()
++ void setCountObjects(long)
+}
+
+
+class org.lia.java_lab8_client_v2.models.Coordinates {
+- {static} long serialVersionUID
+- long x
+- double y
++ long getX()
++ double getY()
++ void setX(long)
++ void setY(double)
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.RemoveHeadCommand {
++ Product product
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.LoginCommand {
++ Product product
+- String login
+- String passwordString
+- byte[] passwordByte
+- String password
+- {static} long serialVersionUID
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.ShowCommand {
++ Product product
+- {static} long serialVersionUID
+- String login
+- String password
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+class org.lia.java_lab8_client_v2.commands.HelpCommand {
++ Product product
+~ CommandManager commandManager
+- String login
+- String password
+- TextArea outputField
+- ResourceBundle bundle
++ String localDescription
++ String getLocalDescription()
++ String description()
++ void execute(String[],String,String)
++ String getLogin()
++ String getPassword()
+}
+
+
+
+
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.AddIfMaxCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.RemoveByIdCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.RemoveLowerCommand
+org.lia.java_lab8_client_v2.managers.Runnable <|.. org.lia.java_lab8_client_v2.managers.CommandManager
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.SignUpCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.ExitCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.ClearCommand
+java.io.Serializable <|-- org.lia.java_lab8_client_v2.commands.Command
+org.lia.java_lab8_client_v2.models.Comparable <|.. org.lia.java_lab8_client_v2.models.Product
+java.io.Serializable <|.. org.lia.java_lab8_client_v2.models.Product
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.PrintFieldAscendingManufacturerCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.UpdateCommand
+java.io.Serializable <|.. org.lia.java_lab8_client_v2.tools.ReplaceProductCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.ExecuteScriptFileNameCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.MinByIdCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.GetByIdCommand
+javafx.application.Application <|-- org.lia.java_lab8_client_v2.App
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.AddCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.CountByPartNumberCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.InfoCommand
+org.lia.java_lab8_client_v2.models.Comparable <|.. org.lia.java_lab8_client_v2.models.Organization
+java.io.Serializable <|.. org.lia.java_lab8_client_v2.models.Organization
+java.io.Serializable <|.. org.lia.java_lab8_client_v2.tools.Response
+java.io.Serializable <|.. org.lia.java_lab8_client_v2.models.Coordinates
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.RemoveHeadCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.LoginCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.ShowCommand
+org.lia.java_lab8_client_v2.commands.Command <|.. org.lia.java_lab8_client_v2.commands.HelpCommand
+@enduml
