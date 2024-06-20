@@ -1,17 +1,28 @@
 package org.lia.java_lab8_client_v2.commands;
 
+import javafx.scene.control.TextArea;
 import org.lia.java_lab8_client_v2.managers.CommandManager;
 import org.lia.java_lab8_client_v2.models.Product;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class HelpCommand implements Command {
     public Product product;
     CommandManager commandManager;
     private String login;
     private String password;
+    private TextArea outputField;
+    private ResourceBundle bundle;
     public HelpCommand(CommandManager commandManager) {
         this.commandManager = commandManager;
+        this.outputField = null;
+    }
+
+    public HelpCommand(CommandManager commandManager, TextArea outputField, ResourceBundle bundle) {
+        this.commandManager = commandManager;
+        this.outputField = outputField;
+        this.bundle = bundle;
     }
 
     public String description() {
@@ -36,7 +47,11 @@ public class HelpCommand implements Command {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             for (String c : commandsLIst.keySet()) {
-                System.out.println(c + ": " + commandsLIst.get(c).description());
+                if (outputField == null) {
+                    System.out.println(c + ": " + commandsLIst.get(c).description());
+                } else {
+                    outputField.setText(outputField.getText() + "\n" + c + ": " + commandsLIst.get(c).description());
+                }
             }
         }
 

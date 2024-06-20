@@ -23,6 +23,7 @@ public class CommandManager implements Runnable {
     private int port;
     public String login = "";
     public String password = "";
+    public long userId = 0;
 
 
     /**Constructor. Loading of available commands*/

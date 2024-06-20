@@ -15,6 +15,8 @@ public class Response implements Serializable {
     private ArrayDeque<Product> productCollectionResponse;
     private boolean success;
 
+    private long userId;
+
     public Product getProduct() {
         return product;
     }
@@ -43,7 +45,16 @@ public class Response implements Serializable {
         this.success = success;
     }
 
-    public  boolean getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
 }

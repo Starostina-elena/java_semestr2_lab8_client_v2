@@ -1,12 +1,9 @@
 package org.lia.java_lab8_client_v2.controller;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.lia.java_lab8_client_v2.App;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import org.lia.java_lab8_client_v2.commands.LoginCommand;
 import org.lia.java_lab8_client_v2.commands.SignUpCommand;
 import org.lia.java_lab8_client_v2.tools.Response;
@@ -18,11 +15,11 @@ public class LoginController {
     @FXML
     private TextField login_login;
     @FXML
-    private TextField password_login;
+    private PasswordField password_login;
     @FXML
     private TextField login_signup;
     @FXML
-    private TextField password_signup;
+    private PasswordField password_signup;
     @FXML
     private Label signup_message_label;
     @FXML
@@ -51,6 +48,7 @@ public class LoginController {
             if (response.getSuccess()) {
                 App.commandManager.login = command.getLogin();
                 App.commandManager.password = command.getPassword();
+                App.commandManager.userId = response.getUserId();
                 FXApp.startMainWindow();
             } else {
                 login_message_label.setText(FXApp.local_bundle.getString("Wrong_login_or_password"));
@@ -69,6 +67,7 @@ public class LoginController {
             if (response.getSuccess()) {
                 App.commandManager.login = command.getLogin();
                 App.commandManager.password = command.getPassword();
+                App.commandManager.userId = response.getUserId();
                 FXApp.startMainWindow();
             } else {
                 signup_message_label.setText(response.getAnswer().get(0));

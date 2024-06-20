@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -17,7 +18,7 @@
                   <FlowPane layoutX="161.0" layoutY="60.0" prefHeight="371.2" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <TextField fx:id="login_login" promptText="login" />
-                        <TextField fx:id="password_login" promptText="password" />
+                        <PasswordField fx:id="password_login" promptText="password" />
                         <Button fx:id="login_button" mnemonicParsing="false" onAction="#okLogin" text="Login" />
                         <Label fx:id="login_message_label" />
                      </children>
@@ -32,7 +33,7 @@
                   <FlowPane prefHeight="80.8" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <TextField fx:id="login_signup" promptText="login" />
-                        <TextField fx:id="password_signup" promptText="password" />
+                        <PasswordField fx:id="password_signup" promptText="password" />
                         <Button fx:id="signup_button" mnemonicParsing="false" onAction="#okSignUp" text="Sign Up" />
                         <Label fx:id="signup_message_label" />
                      </children>

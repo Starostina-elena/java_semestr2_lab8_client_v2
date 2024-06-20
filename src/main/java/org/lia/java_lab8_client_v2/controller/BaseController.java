@@ -19,11 +19,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.lia.java_lab8_client_v2.App;
 
-import org.lia.java_lab8_client_v2.commands.ClearCommand;
+import org.lia.java_lab8_client_v2.commands.*;
 import org.lia.java_lab8_client_v2.models.Product;
 
 import javafx.fxml.FXML;
-import org.lia.java_lab8_client_v2.commands.ShowCommand;
 import org.lia.java_lab8_client_v2.tools.Response;
 
 import java.io.IOException;
@@ -72,6 +71,38 @@ public class BaseController {
     private Button clearButton;
     @FXML
     private ComboBox languageComboBox;
+    @FXML
+    private Button countByPartNumberButton;
+    @FXML
+    private Button executeScriptButton;
+    @FXML
+    private Button exitButton;
+    @FXML
+    private Button helpButton;
+    @FXML
+    private Button infoButton;
+    @FXML
+    private Button minByIdButton;
+    @FXML
+    private Button manufacturersButton;
+    @FXML
+    private Button removeHeadButton;
+    @FXML
+    private Button removeLowerButton;
+    @FXML
+    private Tab menuTab;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label userId;
+    @FXML
+    private TextField scriptFileNameField;
+    @FXML
+    private TextField removeLowerField;
+    @FXML
+    private TextField partNumberField;
+    @FXML
+    private TextArea outputField;
 
     private final HashMap<String, Locale> localeMap = new HashMap<>() {{
         put("English", new Locale("en", "EN"));
@@ -84,6 +115,8 @@ public class BaseController {
 
     @FXML
     public void initialize() {
+        usernameLabel.setText(App.commandManager.login);
+        userId.setText("ID: " + App.commandManager.userId);
         languageComboBox.setItems(FXCollections.observableArrayList(localeMap.keySet()));
         languageComboBox.setValue("English");
         id_field_table.setCellValueFactory(product -> new SimpleLongProperty(product.getValue().getId()).asObject());
@@ -233,6 +266,91 @@ public class BaseController {
         }
     }
 
+    @FXML
+    public void executeScript() {
+        outputField.setText("");
+        ExecuteScriptFileNameCommand command = new ExecuteScriptFileNameCommand(App.commandManager, outputField, this.FXApp.local_bundle);
+        command.execute(new String[] {"script", scriptFileNameField.getText()},
+                App.commandManager.login, App.commandManager.password);
+    }
+
+    @FXML
+    public void helpCommand() {
+        outputField.setText("");
+        HelpCommand command = new HelpCommand(App.commandManager, outputField, this.FXApp.local_bundle);
+        command.execute(new String[] {"help"}, App.commandManager.login, App.commandManager.password);
+    }
+
+    @FXML
+    public void infoCommand() {
+        InfoCommand command = new InfoCommand();
+        command.execute(new String[] {"info"}, App.commandManager.login, App.commandManager.password);
+        Response response = App.commandManager.executeCommandFromObject(command);
+        outputField.setText(response.getAnswer().get(0));
+    }
+
+    @FXML
+    public void exitCommand() {
+        ExitCommand command = new ExitCommand(App.commandManager);
+        command.execute(new String[] {"exit"}, App.commandManager.login, App.commandManager.password);
+    }
+
+    @FXML
+    public void countByPartNumberCommand() {
+        CountByPartNumberCommand command = new CountByPartNumberCommand();
+        command.execute(new String[] {"help", partNumberField.getText()},
+                App.commandManager.login, App.commandManager.password);
+        Response response = App.commandManager.executeCommandFromObject(command);
+        outputField.setText(response.getAnswer().get(0));
+    }
+
+    @FXML
+    public void minByIdCommand() {
+        MinByIdCommand command = new MinByIdCommand();
+        command.execute(new String[] {"min_by_id"}, App.commandManager.login, App.commandManager.password);
+        Response response = App.commandManager.executeCommandFromObject(command);
+        outputField.setText(response.getAnswer().get(0));
+    }
+
+    @FXML
+    public void manufacturersCommand() {
+        outputField.setText("");
+        PrintFieldAscendingManufacturerCommand command = new PrintFieldAscendingManufacturerCommand();
+        command.execute(new String[] {"manufacturers"}, App.commandManager.login, App.commandManager.password);
+        Response response = App.commandManager.executeCommandFromObject(command);
+        for (String c: response.getAnswer()) {
+            outputField.setText(outputField.getText() + "\n" + c);
+        }
+    }
+
+    @FXML
+    public void removeHeadCommand() {
+        outputField.setText("");
+        RemoveHeadCommand command = new RemoveHeadCommand();
+        command.execute(new String[] {"remove_head"}, App.commandManager.login, App.commandManager.password);
+        Response response = App.commandManager.executeCommandFromObject(command);
+        for (String c: response.getAnswer()) {
+            outputField.setText(outputField.getText() + "\n" + c);
+        }
+    }
+
+    @FXML
+    public void removeLowerCommand() {
+        outputField.setText("");
+        RemoveLowerCommand command = new RemoveLowerCommand();
+        try {
+            Integer.parseInt(removeLowerField.getText());
+        } catch (NumberFormatException e) {
+            outputField.setText("Enter number for remove lower command");
+            return;
+        }
+        command.execute(new String[] {"remove_lower", removeLowerField.getText()}, App.commandManager.login, App.commandManager.password);
+        Response response = App.commandManager.executeCommandFromObject(command);
+        for (String c: response.getAnswer()) {
+            outputField.setText(outputField.getText() + "\n" + c);
+        }
+    }
+
     public void setLanguage() {
         ResourceBundle bundle = this.FXApp.local_bundle;
         table_tab.setText(bundle.getString("Table"));
@@ -249,7 +367,17 @@ public class BaseController {
         new_product_button.setText(bundle.getString("New"));
         edit_product_button.setText(bundle.getString("Edit"));
         clearButton.setText(bundle.getString("Clear"));
+        countByPartNumberButton.setText(bundle.getString("Count_by_part_number"));
+        executeScriptButton.setText(bundle.getString("Script"));
+        exitButton.setText(bundle.getString("Exit"));
+        helpButton.setText(bundle.getString("Help"));
+        infoButton.setText(bundle.getString("Info"));
+        minByIdButton.setText(bundle.getString("Min_By_Id"));
+        manufacturersButton.setText(bundle.getString("Manufacturers"));
+        removeHeadButton.setText(bundle.getString("Remove_Head"));
+        removeLowerButton.setText(bundle.getString("Remove_Lower"));
         field_tab.setText(bundle.getString("Area"));
+        menuTab.setText(bundle.getString("Menu"));
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(bundle.getLocale());
         creation_date_field_table.setCellValueFactory(product -> new SimpleStringProperty(product.getValue().getCreationDate().toLocalDate().format(formatter)));
     }

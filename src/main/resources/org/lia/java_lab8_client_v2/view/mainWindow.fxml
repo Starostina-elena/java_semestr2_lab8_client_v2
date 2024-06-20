@@ -2,16 +2,21 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <TabPane maxHeight="584.0" maxWidth="836.0" minHeight="584.0" minWidth="836.0" prefHeight="584.0" prefWidth="836.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lia.java_lab8_client_v2.controller.BaseController">
   <tabs>
@@ -50,14 +55,25 @@
                               </AnchorPane>
                           </content>
                         </ScrollPane>
-                        <ToolBar maxHeight="40.0" maxWidth="832.0" minHeight="40.0" minWidth="88.0" prefHeight="40.0" prefWidth="832.0">
-                          <items>
-                            <Button fx:id="new_product_button" mnemonicParsing="false" onAction="#createElement" text="New" />
-                              <Button fx:id="edit_product_button" mnemonicParsing="false" onAction="#editElement" text="Edit" />
-                              <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearProducts" text="Clear" />
-                              <ComboBox fx:id="languageComboBox" onAction="#languageComboBoxChanged" prefWidth="150.0" />
-                          </items>
-                        </ToolBar>
+                        <HBox>
+                           <children>
+                              <ToolBar maxHeight="40.0" maxWidth="977.0" minHeight="40.0" minWidth="88.0" prefHeight="40.0" prefWidth="510.0">
+                                <items>
+                                  <Button fx:id="new_product_button" minWidth="90.0" mnemonicParsing="false" onAction="#createElement" text="New" />
+                                    <Button fx:id="edit_product_button" minWidth="90.0" mnemonicParsing="false" onAction="#editElement" text="Edit" />
+                                    <Button fx:id="clearButton" minWidth="90.0" mnemonicParsing="false" onAction="#clearProducts" text="Clear" />
+                                    <ComboBox fx:id="languageComboBox" minWidth="130.0" onAction="#languageComboBoxChanged" prefHeight="26.0" prefWidth="130.0" />
+                                    <Button fx:id="exitButton" minWidth="80.0" mnemonicParsing="false" onAction="#exitCommand" text="Exit" />
+                                </items>
+                              </ToolBar>
+                              <VBox>
+                                 <children>
+                                    <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="315.0" text="Username" />
+                                    <Label fx:id="userId" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="314.0" text="ID" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                      </children>
                   </GridPane>
                </children></AnchorPane>
@@ -68,5 +84,47 @@
         <AnchorPane fx:id="visualPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>
     </Tab>
+      <Tab fx:id="menuTab" text="Menu">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox layoutX="1.0" prefHeight="556.0" prefWidth="836.0">
+                     <children>
+                        <GridPane maxHeight="326.0" minHeight="284.0" prefHeight="326.0" prefWidth="836.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button fx:id="helpButton" minWidth="80.0" mnemonicParsing="false" onAction="#helpCommand" text="Help" GridPane.halignment="CENTER" />
+                              <Button fx:id="infoButton" minWidth="80.0" mnemonicParsing="false" onAction="#infoCommand" text="Info" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Button fx:id="executeScriptButton" minWidth="80.0" mnemonicParsing="false" onAction="#executeScript" text="Script " GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Button fx:id="removeLowerButton" mnemonicParsing="false" onAction="#removeLowerCommand" text="Remove Lower" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Button fx:id="countByPartNumberButton" mnemonicParsing="false" onAction="#countByPartNumberCommand" text="Count by part number   " GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                              <Button fx:id="minByIdButton" mnemonicParsing="false" onAction="#minByIdCommand" text="Min By Id  " GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                              <Button fx:id="manufacturersButton" mnemonicParsing="false" onAction="#manufacturersCommand" text="Manufacturers" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                              <Button fx:id="removeHeadButton" mnemonicParsing="false" onAction="#removeHeadCommand" text="Remove Head" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                              <TextField fx:id="scriptFileNameField" promptText="filename.txt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="removeLowerField" promptText="123" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="partNumberField" promptText="abc123" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                           </children>
+                        </GridPane>
+                        <TextArea fx:id="outputField" prefHeight="232.0" prefWidth="836.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
   </tabs>
 </TabPane>
