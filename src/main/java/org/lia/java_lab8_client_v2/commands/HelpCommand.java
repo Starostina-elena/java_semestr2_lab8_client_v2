@@ -14,6 +14,10 @@ public class HelpCommand implements Command {
     private String password;
     private TextArea outputField;
     private ResourceBundle bundle;
+    public String localDescription = "HelpDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
     public HelpCommand(CommandManager commandManager) {
         this.commandManager = commandManager;
         this.outputField = null;
@@ -50,7 +54,7 @@ public class HelpCommand implements Command {
                 if (outputField == null) {
                     System.out.println(c + ": " + commandsLIst.get(c).description());
                 } else {
-                    outputField.setText(outputField.getText() + "\n" + c + ": " + commandsLIst.get(c).description());
+                    outputField.setText(outputField.getText() + "\n" + bundle.getString(commandsLIst.get(c).getLocalDescription()));
                 }
             }
         }

@@ -10,7 +10,10 @@ public class RemoveByIdCommand implements Command {
     private long id;
     private String login;
     private String password;
-
+    public String localDescription = "RemoveByIdDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
     public String description() {
         return "removes element from collection by id";
     }

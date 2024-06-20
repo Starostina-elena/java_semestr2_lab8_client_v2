@@ -8,6 +8,10 @@ public class CountByPartNumberCommand implements Command {
     private String login;
     private String password;
     private String partNumber;
+    public String localDescription = "CountByPartNumberDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
     public String description() {
         return "shows number of element with specified part number. Pattern: count_by_part_number (String)partNumber";

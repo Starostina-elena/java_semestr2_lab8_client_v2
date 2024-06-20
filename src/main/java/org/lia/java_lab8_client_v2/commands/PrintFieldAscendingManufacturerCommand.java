@@ -7,6 +7,10 @@ public class PrintFieldAscendingManufacturerCommand implements Command {
     private static final long serialVersionUID = 1785464768755190753L;
     private String login;
     private String password;
+    public String localDescription = "ManufacturersDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
 
     public String description() {

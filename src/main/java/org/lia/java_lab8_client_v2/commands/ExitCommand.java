@@ -8,7 +8,10 @@ public class ExitCommand implements Command {
     CommandManager commandManager;
     private String login;
     private String password;
-
+    public String localDescription = "ExitDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
     public ExitCommand(CommandManager commandManager) {
         this.commandManager = commandManager;
     }

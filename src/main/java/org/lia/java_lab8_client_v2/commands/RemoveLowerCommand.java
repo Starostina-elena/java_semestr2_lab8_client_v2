@@ -8,7 +8,10 @@ public class RemoveLowerCommand implements Command {
     private long id;
     private String login;
     private String password;
-
+    public String localDescription = "RemoveLowerDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
     public String description() {
         return "delete from collection all elements lower that selected. Pattern: remove_lower (long)id";

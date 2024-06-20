@@ -20,6 +20,10 @@ public class ExecuteScriptFileNameCommand implements Command {
     private String password;
     private TextArea outputField;
     private ResourceBundle bundle;
+    public String localDescription = "ExecuteScriptDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
     public ExecuteScriptFileNameCommand(CommandManager commandManager) {
         this.commandManager = commandManager;

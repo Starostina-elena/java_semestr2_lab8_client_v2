@@ -13,6 +13,10 @@ public class LoginCommand implements Command {
     private byte[] passwordByte;
     private String password;
     private static final long serialVersionUID = 1785464768755190753L;
+    public String localDescription = "LoginDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
     public String description() {
         return "logins a user";

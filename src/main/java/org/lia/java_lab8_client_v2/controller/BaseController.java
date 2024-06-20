@@ -107,6 +107,9 @@ public class BaseController {
     private final HashMap<String, Locale> localeMap = new HashMap<>() {{
         put("English", new Locale("en", "EN"));
         put("Русский", new Locale("ru", "RU"));
+        put("español", new Locale("es", "DO"));
+        put("íslenskur", new Locale("is", "IS"));
+        put("Italiano", new Locale("it", "IT"));
     }};
 
     public void setFXApp(App FXApp) {
@@ -286,7 +289,9 @@ public class BaseController {
         InfoCommand command = new InfoCommand();
         command.execute(new String[] {"info"}, App.commandManager.login, App.commandManager.password);
         Response response = App.commandManager.executeCommandFromObject(command);
-        outputField.setText(response.getAnswer().get(0));
+        outputField.setText(FXApp.local_bundle.getString("infoAnswerPart1") +
+                response.getCountObjects() + " " +
+                FXApp.local_bundle.getString("infoAnswerPart2"));
     }
 
     @FXML
@@ -301,7 +306,9 @@ public class BaseController {
         command.execute(new String[] {"help", partNumberField.getText()},
                 App.commandManager.login, App.commandManager.password);
         Response response = App.commandManager.executeCommandFromObject(command);
-        outputField.setText(response.getAnswer().get(0));
+        outputField.setText(FXApp.local_bundle.getString("countByPartNumberAnswerPart1") +
+                response.getCountObjects() + " " +
+                FXApp.local_bundle.getString("countByPartNumberAnswerPart2"));
     }
 
     @FXML
@@ -329,8 +336,16 @@ public class BaseController {
         RemoveHeadCommand command = new RemoveHeadCommand();
         command.execute(new String[] {"remove_head"}, App.commandManager.login, App.commandManager.password);
         Response response = App.commandManager.executeCommandFromObject(command);
-        for (String c: response.getAnswer()) {
-            outputField.setText(outputField.getText() + "\n" + c);
+        if (response.getSuccess()) {
+            for (String c: response.getAnswer()) {
+                if (c.equals("Object was successfully deleted")) {
+                    outputField.setText(outputField.getText() + "\n" + FXApp.local_bundle.getString("removeHeadResultGood"));
+                } else {
+                    outputField.setText(outputField.getText() + "\n" + c);
+                }
+            }
+        } else {
+            outputField.setText(FXApp.local_bundle.getString("removeHeadResultBad"));
         }
     }
 
@@ -346,9 +361,10 @@ public class BaseController {
         }
         command.execute(new String[] {"remove_lower", removeLowerField.getText()}, App.commandManager.login, App.commandManager.password);
         Response response = App.commandManager.executeCommandFromObject(command);
-        for (String c: response.getAnswer()) {
-            outputField.setText(outputField.getText() + "\n" + c);
-        }
+        outputField.setText(
+                response.getCountObjects() + " " +
+                FXApp.local_bundle.getString("removeLowerPart1")
+        );
     }
 
     public void setLanguage() {

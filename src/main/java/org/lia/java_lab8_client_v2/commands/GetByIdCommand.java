@@ -8,7 +8,10 @@ public class GetByIdCommand implements Command {
     private static final long serialVersionUID = 1785464768755190753L;
     private String login;
     private String password;
-
+    public String localDescription = "GetByIdDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
     private long id;
 
     public String description() {

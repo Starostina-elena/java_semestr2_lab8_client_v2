@@ -10,6 +10,8 @@ public interface Command extends Serializable {
     public Product product = null;
     String login = null;
     String password = null;
+    public String localDescription = "";
+    public String getLocalDescription();
     public String getLogin();
     public String getPassword();
 }

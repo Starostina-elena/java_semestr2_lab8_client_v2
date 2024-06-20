@@ -14,6 +14,10 @@ public class UpdateCommand implements Command {
     private String login;
     private String password;
     long productId;
+    public String localDescription = "UpdateDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
     public UpdateCommand() {
     }

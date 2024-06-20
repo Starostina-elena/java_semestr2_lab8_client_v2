@@ -8,6 +8,10 @@ public class ClearCommand implements Command {
     private static final long serialVersionUID = 1785464768755190753L;
     private String login;
     private String password;
+    public String localDescription = "ClearCommandDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
     public String description() {
         return "clears collection";

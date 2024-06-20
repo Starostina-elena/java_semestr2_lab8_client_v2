@@ -14,9 +14,14 @@ public class AddCommand implements Command {
 
     private String login;
     private String password;
+    public String localDescription = "AddCommandDescr";
 
 
     public Product product;
+
+    public String getLocalDescription() {
+        return localDescription;
+    }
 
     public String description() {
         return "adds an element to collection. " +

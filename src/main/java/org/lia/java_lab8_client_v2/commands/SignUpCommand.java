@@ -12,7 +12,10 @@ public class SignUpCommand implements Command {
     private String passwordString;
     private byte[] passwordByte;
     private String password;
-
+    public String localDescription = "SignUpDescr";
+    public String getLocalDescription() {
+        return localDescription;
+    }
     private static final long serialVersionUID = 1785464768755190753L;
 
     public String description() {
