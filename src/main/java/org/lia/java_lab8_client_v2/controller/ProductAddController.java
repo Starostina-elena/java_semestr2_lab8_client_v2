@@ -72,6 +72,10 @@ public class ProductAddController {
         } else {
             command = new AddCommand();
         }
+        String employees = "0";
+        if (!manufacturerEmployeesField.getText().isBlank()) {
+            employees = manufacturerEmployeesField.getText();
+        }
         try {
             command.execute(new String[] {
                     "add",
@@ -84,7 +88,7 @@ public class ProductAddController {
                     " ",
                     manufacturerField.getText(),
                     manufacturerFullnameField.getText(),
-                    manufacturerEmployeesField.getText(),
+                    employees,
             }, App.commandManager.login, App.commandManager.password);
         } catch (IllegalArgumentException e) {
             messageLabel.setText(e.getMessage());
